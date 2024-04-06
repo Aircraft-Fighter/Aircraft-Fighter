@@ -5,14 +5,12 @@ using UnityEngine;
 public class Bomber : MonoBehaviour
 {
     [SerializeField] private GameObject bomb;
-    private Bomb _bomb;
-
-    private Rigidbody _rigidbody;
+    [SerializeField] private float throwSeed ;
+    private Rigidbody _bombRigidbody;
 
     // Start is called before the first frame update
     void Start()
     {
-        _rigidbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -26,6 +24,8 @@ public class Bomber : MonoBehaviour
 
     public void ThrowBomb()
     {
-        GameObject initBomb = Instantiate(bomb, transform.position, Quaternion.Euler(90, 0, 0));
+        GameObject initBomb = Instantiate(bomb, transform.position, Quaternion.identity);
+        _bombRigidbody = initBomb.GetComponent<Rigidbody>();
+        _bombRigidbody.AddForce(gameObject.transform.forward * (Time.fixedDeltaTime * throwSeed), ForceMode.Acceleration);
     }
 }
